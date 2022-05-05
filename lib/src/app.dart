@@ -1,5 +1,7 @@
-//import flutter package
+//import flutter and http package
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:http/http.dart' show get;
 
 class App extends StatefulWidget{
   createState(){
@@ -11,6 +13,14 @@ class App extends StatefulWidget{
 //create a class that represents the State of the widget
 class AppState extends State<App>{
   int counter = 0;
+
+  void fetchImage(){
+    counter++;
+    var url = Uri.https('jsonplaceholder.typicode.com', '/photos/$counter');
+    get(url);
+  }
+
+
    //defines a build method that returns the widget
   Widget build(context){
       const mainColor = Color(0xFFE39EC1);
@@ -22,9 +32,7 @@ class AppState extends State<App>{
           body: Text('$counter'),
           floatingActionButton: FloatingActionButton(
             onPressed: (){
-              setState(() {
-                counter = counter + 1;
-              });
+              fetchImage;
             },
             backgroundColor: mainColor,
             child: const Icon(
