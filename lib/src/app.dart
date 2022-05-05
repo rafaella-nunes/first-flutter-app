@@ -1,7 +1,8 @@
-//import flutter and http package
+//import statements
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show get;
+import './models/image_model.dart';
+import 'dart:convert';
 
 class App extends StatefulWidget{
   createState(){
@@ -13,11 +14,18 @@ class App extends StatefulWidget{
 //create a class that represents the State of the widget
 class AppState extends State<App>{
   int counter = 0;
+  List<ImageModel> images = [];
 
-  void fetchImage(){
+  void fetchImage() async{
     counter++;
     var url = Uri.https('jsonplaceholder.typicode.com', '/photos/$counter');
-    get(url);
+    var resp = await get(url);
+    var imgModel = ImageModel.fromJson(json.decode(resp.body));
+
+    setState((){
+      images.add(imgModel);
+    });
+
   }
 
 
